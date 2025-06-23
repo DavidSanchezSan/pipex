@@ -3,7 +3,7 @@
 
 # include <string.h>
 # include <errno.h>
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/types.h>
@@ -13,11 +13,12 @@
 # include <fcntl.h>  
 # include <stdlib.h>
 
-int		open_file(char *file, int n);
+int		open_file_read(char *file);
+int		open_file_write(char *file);
 char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
-void	exit_handler(int n_exit);
+void	args_exit(int error_num);
 
 #endif

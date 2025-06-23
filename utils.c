@@ -1,23 +1,35 @@
 #include "pipex.h"
 
-void	exit_handler(int n_exit)
+void	args_exit(int error_num)
 {
-	if (n_exit == 1)
-		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
-	exit(0);
+	ft_putstr_fd("Execution mode = ./pipex infile cmd cmd outfile\n", 2);
+	exit(error_num);
 }
 
-int	open_file(char *file, int in_or_out)
+int	open_file_read(char *file)
 {
-	int	ret;
+	int	fd_id;
 
-	if (in_or_out == 0)
-		ret = open(file, O_RDONLY, 0777);
-	if (in_or_out == 1)
-		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (ret == -1)
-		exit(0);
-	return (ret);
+	fd_id = open(file, O_RDONLY, 0777);
+	if (fd_id == -1)
+	{
+		perror("Error opening file to read");
+		exit(4);
+	}
+	return (fd_id);
+}
+
+int	open_file_write(char *file)
+{
+	int	fd_id;
+
+	fd_id = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd_id == -1)
+	{
+		perror("Error opening file to write");
+		exit(5);
+	}
+	return (fd_id);
 }
 
 void	ft_free_tab(char **tab)
