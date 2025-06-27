@@ -32,17 +32,17 @@ int	open_file_write(char *file)
 	return (fd_id);
 }
 
-void	ft_free_tab(char **tab)
+void	ft_free_tokens(char **tokens_to_free)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tokens_to_free[i])
 	{
-		free(tab[i]);
+		free(tokens_to_free[i]);
 		i++;
 	}
-	free(tab);
+	free(tokens_to_free);
 }
 
 char	*my_getenv(char *name, char **env)
@@ -69,30 +69,30 @@ char	*my_getenv(char *name, char **env)
 	return (NULL);
 }
 
-char	*get_path(char *cmd, char **env)
+char	*get_path(char *commands, char **env)
 {
 	int		i;
 	char	*exec;
 	char	**allpath;
 	char	*path_part;
-	char	**s_cmd;
+	char	**command_tokens;
 
 	i = -1;
 	allpath = ft_split(my_getenv("PATH", env), ':');
-	s_cmd = ft_split(cmd, ' ');
+	command_tokens = ft_split(commands, ' ');
 	while (allpath[++i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, s_cmd[0]);
+		exec = ft_strjoin(path_part, command_tokens[0]);
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			ft_free_tab(s_cmd);
+			ft_free_tokens(command_tokens);
 			return (exec);
 		}
 		free(exec);
 	}
-	ft_free_tab(allpath);
-	ft_free_tab(s_cmd);
-	return (cmd);
+	ft_free_tokens(allpath);
+	ft_free_tokens(command_tokens);
+	return (commands);
 }

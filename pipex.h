@@ -18,7 +18,7 @@ int		open_file_write(char *file);
 char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
-void	ft_free_tab(char **tab);
+void	ft_free_tokens(char **tab);
 void	args_exit(int error_num);
 
 #endif
