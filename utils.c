@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 11:25:37 by dasanche          #+#    #+#             */
+/*   Updated: 2025/06/27 18:44:21 by dasanche         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	args_exit(int error_num)
@@ -32,67 +44,46 @@ int	open_file_write(char *file)
 	return (fd_id);
 }
 
-void	ft_free_tokens(char **tokens_to_free)
+/*
+Devuelve un puntero a la ruta del ejecutable
+buscando la variable PATH en el entorno
+y omitiendo el string PATH=
+*/
+char	*get_path_variable(char **env)
+{
+	int		i;
+	char	*path_var;
+
+	i = 0;
+	path_var = NULL;
+	while (env[i] != NULL)
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			path_var = env[i] + 5;
+			break ;
+		}
+		i++;
+	}
+	return (path_var);
+}
+
+/*
+Función que libera los elementos convertidos
+en tokens y guardados en array de arrays.
+*/
+
+void	ft_free_tokens(char **tokens)
 {
 	int	i;
 
+	if (!tokens)
+		return ;
 	i = 0;
-	while (tokens_to_free[i])
+	while (tokens[i])
 	{
-		free(tokens_to_free[i]);
+		free(tokens[i]);
 		i++;
 	}
-	free(tokens_to_free);
-}
-
-char	*my_getenv(char *name, char **env)
-{
-	int		i;
-	int		j;
-	char	*sub;
-
-	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		sub = ft_substr(env[i], 0, j);
-		if (ft_strcmp(sub, name) == 0)
-		{
-			free(sub);
-			return (env[i] + j + 1);
-		}
-		free(sub);
-		i++;
-	}
-	return (NULL);
-}
-
-char	*get_path(char *commands, char **env)
-{
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
-	char	**command_tokens;
-
-	i = -1;
-	allpath = ft_split(my_getenv("PATH", env), ':');
-	command_tokens = ft_split(commands, ' ');
-	while (allpath[++i])
-	{
-		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, command_tokens[0]);
-		free(path_part);
-		if (access(exec, F_OK | X_OK) == 0)
-		{
-			ft_free_tokens(command_tokens);
-			return (exec);
-		}
-		free(exec);
-	}
-	ft_free_tokens(allpath);
-	ft_free_tokens(command_tokens);
-	return (commands);
+	free(tokens);
 }

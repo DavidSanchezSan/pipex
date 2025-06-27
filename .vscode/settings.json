@@ -4,6 +4,7 @@
         "stat.h": "c",
         "types.h": "c",
         "string.h": "c",
-        "pipex.h": "c"
+        "pipex.h": "c",
+        "stdio.h": "c"
     }
 }

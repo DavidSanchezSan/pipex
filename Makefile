@@ -6,6 +6,7 @@ RM		=	rm -f
 
 SRC = pipex.c \
 	  utils.c \
+	  processes.c \
 
 OBJ = $(SRC:.c=.o)
 HEADERS = pipex.h
