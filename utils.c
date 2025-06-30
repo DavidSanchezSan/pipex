@@ -14,7 +14,7 @@
 
 void	args_exit(int error_num)
 {
-	ft_putstr_fd("Execution mode = ./pipex infile cmd cmd outfile\n", 2);
+	ft_putstr_fd("Execution mode = ./pipex infile.txt command1 command2 outfile.txt\n", 2);
 	exit(error_num);
 }
 
