@@ -29,6 +29,7 @@ void	child(char **argv, int *pipe_fd, char **env)
 	fd = open_file_read(argv[1]);
 	dup2(fd, 0);
 	dup2(pipe_fd[1], 1);
+	close(pipe_fd[0]);
 	command(argv[2], env);
 }
 
