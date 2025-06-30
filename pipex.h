@@ -20,7 +20,6 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>  
 # include <stdlib.h>
@@ -37,6 +36,5 @@ void	command(char *cmd, char **env);
 char	**get_path_dirs(char **env);
 void	exec_if_found(char *path, char **args, char **env);
 void	try_exec_from_paths(char **cmd_args, char **directories, char **env);
-void	try_exec_from_paths(char **cmd_args, char **dirs, char **env);
 
 #endif

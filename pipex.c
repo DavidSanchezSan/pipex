@@ -87,22 +87,6 @@ void	try_exec_from_paths(char **cmd_args, char **directories, char **env)
 	}
 }
 
-/*
-Función principal:
-Array para el pipe: p_fd[0] lectura, p_fd[1] escritura
-Variable para guardar el PID del hijo
-Programa, archivo 1 (entrada), comando 1, comando 2, archivo 2 (salida).
-Verifica que haya 5 argumentos, si no es así sale
-del programa con un mensaje por la salida de error
-estandar explicando el correcto funcionamiento.
-Forma de comprobar que existe el input file y salir con error si no es así
-Pipe que utiliza un archivo de entrada y uno de salida.
-Genera una tubería de comunicación en memoria. Array de dos ints.
-Crea el pipe; si falla, sale con un mensaje de error
-Crea un proceso hijo y guarda su PID
-Si fork falla, se termina el programa
-*/
-
 int	main(int argc, char **argv, char **env)
 {
 	int		pipe_fd[2];

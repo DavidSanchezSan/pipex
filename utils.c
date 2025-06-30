@@ -44,11 +44,6 @@ int	open_file_write(char *file)
 	return (fd_id);
 }
 
-/*
-Devuelve un puntero a la ruta del ejecutable
-buscando la variable PATH en el entorno
-y omitiendo el string PATH=
-*/
 char	*get_path_variable(char **env)
 {
 	int		i;
@@ -67,11 +62,6 @@ char	*get_path_variable(char **env)
 	}
 	return (path_var);
 }
-
-/*
-Función que libera los elementos convertidos
-en tokens y guardados en array de arrays.
-*/
 
 void	ft_free_tokens(char **tokens)
 {
