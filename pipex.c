@@ -12,23 +12,26 @@
 
 #include "pipex.h"
 
-void	command(char *comand, char **env)
+void command(char *comand, char **env)
 {
-	char	**comand_args;
-	char	**directories;
+    char **comand_args;
+    char **directories;
 
-	comand_args = ft_split(comand, ' ');
-	if (!comand_args || !comand_args[0])
-	{
-		perror("Invalid command");
-		exit(9);
-	}
-	directories = get_path_dirs(env);
-	try_exec_from_paths(comand_args, directories, env);
-	ft_free_tokens(comand_args);
-	ft_free_tokens(directories);
-	perror("Command not found");
-	exit(8);
+    comand_args = ft_split(comand, ' ');
+    if (!comand_args || !comand_args[0])
+    {
+        ft_putstr_fd("pipex: invalid command\n", 2);
+        ft_free_tokens(comand_args);
+        exit(9);
+    }
+    directories = get_path_dirs(env);
+    try_exec_from_paths(comand_args, directories, env);
+    ft_putstr_fd("pipex: command not found: ", 2);
+    ft_putstr_fd(comand_args[0], 2);
+    ft_putstr_fd("\n", 2);
+    ft_free_tokens(comand_args);
+    ft_free_tokens(directories);
+    exit(127);
 }
 
 char	**get_path_dirs(char **env)
@@ -87,27 +90,19 @@ void	try_exec_from_paths(char **cmd_args, char **directories, char **env)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
-	int		pipe_fd[2];
-	int		fd;
-	pid_t	pid;
+    int pipe_fd[2];
 
-	fd = open_file_read(argv[1]);
-	close(fd);
-	if (argc != 5)
-		args_exit(1);
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("Pipe creation error");
-		exit(2);
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("Failed creating child process");
-		exit(3);
-	}
-	process_call(pid, argv, pipe_fd, env);
-	return (0);
+    if (argc != 5)
+        args_exit(1);
+
+    if (pipe(pipe_fd) == -1)
+    {
+        perror("Pipe creation error");
+        exit(2);
+    }
+
+    process_call(argv, pipe_fd, env);
+    return (0);
 }

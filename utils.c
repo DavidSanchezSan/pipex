@@ -18,17 +18,22 @@ void	args_exit(int error_num)
 	exit(error_num);
 }
 
-int	open_file_read(char *file)
+int open_file_read(char *file)
 {
-	int	fd_id;
+    int fd_id;
 
-	fd_id = open(file, O_RDONLY, 0777);
-	if (fd_id == -1)
-	{
-		perror("Error opening file to read");
-		exit(4);
-	}
-	return (fd_id);
+    fd_id = open(file, O_RDONLY);
+    if (fd_id == -1)
+    {
+        perror("Error opening file to read");
+        fd_id = open("/dev/null", O_RDONLY);
+        if (fd_id == -1)
+        {
+            perror("Failed opening /dev/null");
+            exit(4);
+        }
+    }
+    return (fd_id);
 }
 
 int	open_file_write(char *file)
