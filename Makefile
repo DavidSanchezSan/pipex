@@ -21,7 +21,7 @@ all: $(LIB) $(NAME)
 $(NAME): $(OBJ) $(LIB)
 	$(CC) $(CFLAGS) $(OBJ) -L$(LIBDIR) -lft -o $(NAME)
 
-# Compilar cada .c a .o (si cambia el .h, también recompila)
+# Compilar cada .c a .o (si cambia el .h, también recompilo)
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 

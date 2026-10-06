@@ -31,7 +31,7 @@ char	*get_path_variable(char **env);
 void	ft_free_tokens(char **tokens);
 void	first_child(char **argv, int *pipe_fd, char **env);
 void	second_child(char **argv, int *pipe_fd, char **env);
-void	process_call(char **argv, int *pipe_fd, char **env);
+int		process_call(char **argv, int *pipe_fd, char **env);
 void	command(char *cmd, char **env);
 char	**get_path_dirs(char **env);
 void	exec_if_found(char *path, char **args, char **env);

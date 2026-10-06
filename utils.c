@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/17 11:25:37 by dasanche          #+#    #+#             */
-/*   Updated: 2025/06/27 18:44:21 by dasanche         ###   ########.fr       */
+/*   Created: 2025/09/12 10:53:35 by dasanche          #+#    #+#             */
+/*   Updated: 2025/09/12 10:53:35 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 void	args_exit(int error_num)
 {
-	ft_putstr_fd("Execution mode = ./pipex infile.txt command1 command2 outfile.txt\n", 2);
+	ft_putstr_fd("Exec = ./pipex infile.txt command1 command2 outfile.txt\n",
+		2);
 	exit(error_num);
 }
 
-int open_file_read(char *file)
+int	open_file_read(char *file)
 {
-    int fd_id;
+	int	fd_id;
 
-    fd_id = open(file, O_RDONLY);
-    if (fd_id == -1)
-    {
-        perror("Error opening file to read");
-        fd_id = open("/dev/null", O_RDONLY);
-        if (fd_id == -1)
-        {
-            perror("Failed opening /dev/null");
-            exit(4);
-        }
-    }
-    return (fd_id);
+	fd_id = open(file, O_RDONLY);
+	if (fd_id == -1)
+	{
+		perror("Error opening file to read");
+		fd_id = open("/dev/null", O_RDONLY);
+		if (fd_id == -1)
+		{
+			perror("Failed opening /dev/null");
+			exit(4);
+		}
+	}
+	return (fd_id);
 }
 
 int	open_file_write(char *file)
@@ -44,7 +45,7 @@ int	open_file_write(char *file)
 	if (fd_id == -1)
 	{
 		perror("Error opening file to write");
-		exit(5);
+		exit(1);
 	}
 	return (fd_id);
 }
